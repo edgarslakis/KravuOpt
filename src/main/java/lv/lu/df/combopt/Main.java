@@ -1,6 +1,9 @@
 package lv.lu.df.combopt;
 
 
+import ai.timefold.solver.core.api.score.ScoreExplanation;
+import ai.timefold.solver.core.api.score.buildin.hardsoft.HardSoftScore;
+import ai.timefold.solver.core.api.solver.SolutionManager;
 import ai.timefold.solver.core.api.solver.Solver;
 import ai.timefold.solver.core.api.solver.SolverFactory;
 import ai.timefold.solver.core.config.solver.SolverConfig;
@@ -9,6 +12,7 @@ import lv.lu.df.combopt.domain.BinPackingSolution;
 import lv.lu.df.combopt.domain.Pack;
 import lv.lu.df.combopt.domain.Vehicle;
 import lv.lu.df.combopt.solver.ScoreCalculator;
+import lv.lu.df.combopt.solver.StreamCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +44,8 @@ public class Main {
         SolverFactory<BinPackingSolution> solverFactory = SolverFactory.create((new SolverConfig()
                 .withSolutionClass(BinPackingSolution.class)
                 .withEntityClasses(Pack.class)
-                .withEasyScoreCalculatorClass(ScoreCalculator.class)
+                //.withEasyScoreCalculatorClass(ScoreCalculator.class)
+                .withConstraintProviderClass(StreamCalculator.class)
                 .withTerminationConfig( new TerminationConfig().withUnimprovedSecondsSpentLimit(10L))));
 
         // kur apkārtnes funkcija? lieto noklusēto apkārtnes funkciju - solveris izmanto swap un change.
@@ -50,6 +55,11 @@ public class Main {
 
         //padod problēmu
         BinPackingSolution solution = solver.solve(problem);
+
+        SolutionManager<BinPackingSolution, HardSoftScore> solutionManager = SolutionManager.create(solverFactory);
+        ScoreExplanation<BinPackingSolution, HardSoftScore> scoreExplanation = solutionManager.explain(solution);
+        LOGGER.info(scoreExplanation.getSummary());
+
 
         solution.print();
 

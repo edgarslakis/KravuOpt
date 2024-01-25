@@ -14,11 +14,14 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class Pack {
 
+    private Integer id;
     private Integer x;
     private Integer y;
-    public Double getSize() {
-        Double size = 0.0;
-        size = (double) ((this.getX()) * (this.getY()));
+    private Integer size;
+
+    public Integer getSize() {
+        Integer size = 0;
+        size = (this.getX()) * (this.getY());
         return size;
     }
 

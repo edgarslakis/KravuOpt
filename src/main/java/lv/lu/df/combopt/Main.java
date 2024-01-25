@@ -25,10 +25,6 @@ public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
         LOGGER.info("Hello world from Logger");
         LOGGER.debug("Hello world from Logger debugger");
 
@@ -53,19 +49,14 @@ public class Main {
         //Izveido jaunu solveri no augstāk rakstītās konfigurācijas
         Solver<BinPackingSolution> solver = solverFactory.buildSolver();
 
-        //padod problēmu
+        //padod problēmu solverim
         BinPackingSolution solution = solver.solve(problem);
 
         SolutionManager<BinPackingSolution, HardSoftScore> solutionManager = SolutionManager.create(solverFactory);
         ScoreExplanation<BinPackingSolution, HardSoftScore> scoreExplanation = solutionManager.explain(solution);
         LOGGER.info(scoreExplanation.getSummary());
 
-
         solution.print();
-
-
-
-
     }
 
 }

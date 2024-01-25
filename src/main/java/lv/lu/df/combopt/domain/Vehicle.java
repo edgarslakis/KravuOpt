@@ -19,19 +19,26 @@ public class Vehicle {
     private String regNr;
     private Integer length;
     private Integer width;
-    private Integer cost = 10;
+    private Integer cost;
+    private Integer capacity;
 
-    public Double getCapacity() {
-        Double capacity = 0.0;
-        capacity = (double) ((this.getLength()) * (this.getWidth()));
+    public Integer getCapacity() {
+        Integer capacity = 0;
+        capacity = (this.getLength()) * (this.getWidth());
         return capacity;
     }
     //Jāpārliecinās, lai kravas x, y dimensija nepārsniedz length, width
     // Jāpārliecinās, lai kopējā krava nepārsniedz 10
     // Jāpārliecinās, lai visas paciņas ir iekrautas
 
-    @PlanningListVariable
-    private List<Pack> content = new ArrayList<>();
+//    @PlanningListVariable
+//    private List<Pack> content = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return this.getRegNr();
+    }
+
 
 //    @InverseRelationShadowVariable(sourceVariableName = "vehicles")
 //    private Vehicle vehicle;

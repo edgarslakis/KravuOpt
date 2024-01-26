@@ -5,7 +5,6 @@ import ai.timefold.solver.core.api.score.buildin.hardsoft.HardSoftScore;
 import ai.timefold.solver.core.api.score.stream.Constraint;
 import ai.timefold.solver.core.api.score.stream.ConstraintFactory;
 import ai.timefold.solver.core.api.score.stream.ConstraintProvider;
-import ai.timefold.solver.core.api.score.stream.Joiners;
 
 import java.util.function.Function;
 
@@ -22,7 +21,9 @@ public class StreamCalculator implements ConstraintProvider {
         return  new Constraint[]{
                 everyPack(constraintFactory),
                 requiredSpace(constraintFactory),
-                vehicleCost(constraintFactory)
+                vehicleCost(constraintFactory),
+                packTooLarge(constraintFactory),
+                packOversize(constraintFactory)
         };
     }
 
@@ -32,7 +33,7 @@ public class StreamCalculator implements ConstraintProvider {
                 .penalize(HardSoftScore.ONE_SOFT, pack -> 1)
                 .asConstraint("everyPack");
     }
-
+    // Jāpārliecinās, lai kopējā paciņu izmēru summa nepārsniedz Vehicle capacity
     public Constraint requiredSpace(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .forEach(Pack.class)
@@ -41,11 +42,36 @@ public class StreamCalculator implements ConstraintProvider {
                 .penalize(HardSoftScore.ONE_HARD,(vehicle, size) -> size - vehicle.getCapacity())
                 .asConstraint("requiredSpace");
     }
+    // Katras jaunas mašīnas izmantošanai ir maksa cost
     public Constraint vehicleCost(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .forEach(Vehicle.class)
                 .ifExists(Pack.class, equal(Function.identity(), Pack::getVehicle))
                 .penalize(HardSoftScore.ONE_SOFT, Vehicle::getCost)
                 .asConstraint("vehicleCost");
+    }
+    // 4x1 kasti navar ietūcīt 3x3 mašīnā. if True -> ONE_HARD
+    // Vispirms pārbaudām, vai kāda no x,y dimensijām nesaiet.
+    public Constraint packTooLarge(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .forEach(Pack.class)
+                .filter(Pack::isGoodsConstraintBroken)
+                .penalize(HardSoftScore.ONE_HARD)
+                .asConstraint("packTooLarge");
+    }
+    // Pārbauda paciņas laukumu
+    public Constraint packOversized(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .forEach(Pack.class)
+                .filter(pack -> pack.getVehicle() == null)
+                .penalize(HardSoftScore.ONE_HARD)
+                .asConstraint("packLeftOut");
+    }
+    public Constraint packOversize(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .forEach(Pack.class)
+                .filter(Pack::oversized)
+                .penalize(HardSoftScore.ONE_HARD)
+                .asConstraint("packLeftOut");
     }
 }

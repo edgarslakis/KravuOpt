@@ -27,28 +27,9 @@ public class Vehicle {
         capacity = (this.getLength()) * (this.getWidth());
         return capacity;
     }
-    //Jāpārliecinās, lai kravas x, y dimensija nepārsniedz length, width
-    // Jāpārliecinās, lai kopējā krava nepārsniedz 10
-    // Jāpārliecinās, lai visas paciņas ir iekrautas
-
-//    @PlanningListVariable
-//    private List<Pack> content = new ArrayList<>();
 
     @Override
     public String toString() {
         return this.getRegNr();
     }
-
-
-//    @InverseRelationShadowVariable(sourceVariableName = "vehicles")
-//    private Vehicle vehicle;
-//
-//    @NextElementShadowVariable(sourceVariableName = "vehicles")
-//    private Vehicle next;
-//
-//    @PreviousElementShadowVariable(sourceVariableName = "vehicles")
-//    private Vehicle prev;
-
-
-
 }

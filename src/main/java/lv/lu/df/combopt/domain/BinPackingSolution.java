@@ -39,19 +39,13 @@ public class BinPackingSolution {
 
     public void print() {
         this.getVechicleList().forEach(vehicle -> {
-            LOGGER.info(vehicle.getRegNr() + "(" + vehicle.getLength() + ")");
+            LOGGER.info(vehicle.getRegNr() + "(" + vehicle.getCapacity() + ")");
             for (Pack pack: this.getPackList()) {
                 if (pack.getVehicle() == vehicle) {
                     LOGGER.info(pack.getId() + ". paciņa ar laukumu " + pack.getSize());}
             };
-            System.out.println("---");
         });
     }
-//    public void print() {
-//        this.getPackList().forEach(pack -> {
-//            LOGGER.info(pack.getSize() + " lieluma paciņa ir " + pack.getVehicle() + " mašīnā");
-//        });
-//    }
 
     public static BinPackingSolution generateData(){
         BinPackingSolution problem = new BinPackingSolution();
@@ -66,7 +60,7 @@ public class BinPackingSolution {
         Vehicle v2 = new Vehicle();
         v2.setRegNr("BB1111");
         v2.setLength(10);
-        v2.setWidth(2);
+        v2.setWidth(4);
         v2.setCost(1);
 
         Pack p1 = new Pack();
@@ -97,10 +91,15 @@ public class BinPackingSolution {
         Pack p6 = new Pack();
         p6.setId(6);
         p6.setX(4);
-        p6.setY(2);
+        p6.setY(20);
+
+        Pack p7 = new Pack();
+        p7.setId(7);
+        p7.setX(11);
+        p7.setY(1);
 
         problem.getVechicleList().addAll(List.of(v1, v2));
-        problem.getPackList().addAll(List.of(p1,p2,p3,p4,p5,p6));
+        problem.getPackList().addAll(List.of(p1,p2,p3,p4,p5,p6,p7));
 
         return problem;
     }

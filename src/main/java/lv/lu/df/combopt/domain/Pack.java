@@ -28,6 +28,21 @@ public class Pack {
     @PlanningVariable
     private Vehicle vehicle;
 
+    //Jāpārliecinās, lai paciņas x, y izmēri nepārsniedz length, width
+    public Boolean isGoodsConstraintBroken() {
+        if (vehicle.getLength() < this.getX()) return true;
+        else return vehicle.getWidth() < this.getY();
+    }
+
+    //J paciņas laukums pārsniedz vehicle Capacity, tā netiek piekārtota mašīnai. t.i. vehicle = null
+    public Boolean oversized() {
+        if (vehicle.getCapacity() < this.getSize()) {
+            //this.setVehicle(null);
+            return true;
+        }
+        else return false;
+    }
+
     @Override
     public String toString() {
         return this.getX().toString();

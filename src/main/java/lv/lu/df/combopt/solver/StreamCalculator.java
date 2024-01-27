@@ -23,7 +23,7 @@ public class StreamCalculator implements ConstraintProvider {
                 requiredSpace(constraintFactory),
                 vehicleCost(constraintFactory),
                 packTooLarge(constraintFactory),
-                packOversize(constraintFactory)
+                packOversize(constraintFactory),
         };
     }
 
@@ -60,6 +60,7 @@ public class StreamCalculator implements ConstraintProvider {
                 .asConstraint("packTooLarge");
     }
     // Pārbauda paciņas laukumu
+    // Man nesanāk pārbaudīt, vai paciņa ir piekārtota NULL mašīnai. Nevarēju atrast risinājumu.
     public Constraint packOversized(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .forEach(Pack.class)

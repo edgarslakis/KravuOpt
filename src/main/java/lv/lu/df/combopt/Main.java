@@ -30,14 +30,16 @@ public class Main {
         LOGGER.debug("Hello world from Logger debugger");
 
         // Vienkārši statiskie piemēra dati. Nodefinēta, kā public static metode.
-        BinPackingSolution problem = BinPackingSolution.generateData();
+        BinPackingSolution problem = BinPackingSolution.generateData(50);
 
         problem.print();
 
+        // SOLVERA KONFIGURĒŠANA: (alternatīva ir xml failā SolverConfig.xml, mapē resources)
         // Pasakām, kas ir problēma,
         // kas ir maināms (Entity)
         // kā rēķināt izmaksas
-        // kā beigt darbu
+        // kā beigt darbu (pēc 10 sekundēm)
+        // Pārbaudām, lai risinājums būtu atkārtojams ar FULL_ASSERT režīmu
         SolverFactory<BinPackingSolution> solverFactory = SolverFactory.create((new SolverConfig()
                 .withSolutionClass(BinPackingSolution.class)
                 .withEntityClasses(Pack.class)
@@ -46,14 +48,19 @@ public class Main {
                 .withTerminationConfig( new TerminationConfig().withUnimprovedSecondsSpentLimit(10L)))
                 .withEnvironmentMode(EnvironmentMode.FULL_ASSERT));
 
-        // kur apkārtnes funkcija? lieto noklusēto apkārtnes funkciju - solveris izmanto swap un change.
+        SolverFactory<BinPackingSolution> solverFactoryFromXML = SolverFactory
+                .createFromXmlResource("SolverConfig.xml");
+
+        // kur apkārtnes funkcija? Solveris lieto noklusēto apkārtnes funkciju - swapMoveSelector un changeMoveSelector
+        //
 
         //Izveido jaunu solveri no augstāk rakstītās konfigurācijas
-        Solver<BinPackingSolution> solver = solverFactory.buildSolver();
+        Solver<BinPackingSolution> solver = solverFactoryFromXML.buildSolver();
 
         //padod problēmu solverim
         BinPackingSolution solution = solver.solve(problem);
 
+        // Default. Local Search solis darbojas pēc Late Acceptance algoritma.
         SolutionManager<BinPackingSolution, HardSoftScore> solutionManager = SolutionManager.create(solverFactory);
         ScoreExplanation<BinPackingSolution, HardSoftScore> scoreExplanation = solutionManager.explain(solution);
         LOGGER.info(scoreExplanation.getSummary());

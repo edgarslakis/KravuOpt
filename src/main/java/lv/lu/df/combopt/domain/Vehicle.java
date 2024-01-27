@@ -12,7 +12,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@PlanningEntity
+//@PlanningEntity - vai šeit vajag planning entity? Izskatās, ka ne.
 @Getter @Setter @NoArgsConstructor
 public class Vehicle {
 

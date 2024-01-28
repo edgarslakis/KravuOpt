@@ -18,7 +18,7 @@ public class BenchmarkerRunner {
         //BinPackingSolution problem = BinPackingSolution.generateData(10);
 
         BinPackingSolutionJsonIO binPackingSolutionJsonIO = new BinPackingSolutionJsonIO();
-        binPackingSolutionJsonIO.write(BinPackingSolution.generateData(5), new File("data/scale5.json"));
+        binPackingSolutionJsonIO.write(BinPackingSolution.generateData(50), new File("data/scale50.json"));
 
         /*PlannerBenchmark benchmark = benchmarkFactoryFromXML.buildPlannerBenchmark(
                 BinPackingSolution.generateData(5),
@@ -28,7 +28,8 @@ public class BenchmarkerRunner {
                 BinPackingSolution.generateData(50),
                 BinPackingSolution.generateData(100)
         );*/
-        //benchmark.benchmarkAndShowReportInBrowser();
+        PlannerBenchmark benchmark = benchmarkFactoryFromXML.buildPlannerBenchmark();
+        benchmark.benchmarkAndShowReportInBrowser();
 
     }
 }

@@ -24,7 +24,7 @@
             <entityTabuSize>2</entityTabuSize>
         </acceptor>
         <forager>
-            <acceptedCountLimit>20</acceptedCountLimit>
+            <acceptedCountLimit>10</acceptedCountLimit>
         </forager>
     </localSearch>
 </solver>

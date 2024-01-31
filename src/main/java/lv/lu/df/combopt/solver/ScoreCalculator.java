@@ -13,7 +13,7 @@ public class ScoreCalculator implements EasyScoreCalculator<BinPackingSolution, 
     public HardSoftScore calculateScore(BinPackingSolution packingSolution) {
         int hardScore = 0;
         int softScore = 0;
-        for (Vehicle vehicle : packingSolution.getVechicleList()) {
+        for (Vehicle vehicle : packingSolution.getVehicleList()) {
             int xUsage = 0;
             boolean used = false;
 

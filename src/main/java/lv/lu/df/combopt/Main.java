@@ -30,7 +30,7 @@ public class Main {
         LOGGER.debug("Hello world from Logger debugger");
 
         // Vienkārši statiskie piemēra dati. Nodefinēta, kā public static metode.
-        BinPackingSolution problem = BinPackingSolution.generateData(50);
+        BinPackingSolution problem = BinPackingSolution.generateData(100);
 
         problem.print();
 
@@ -51,8 +51,7 @@ public class Main {
         SolverFactory<BinPackingSolution> solverFactoryFromXML = SolverFactory
                 .createFromXmlResource("SolverConfig.xml");
 
-        // kur apkārtnes funkcija? Solveris lieto noklusēto apkārtnes funkciju - swapMoveSelector un changeMoveSelector
-        //
+        //Solveris lieto noklusēto apkārtnes funkciju - swapMoveSelector un changeMoveSelector
 
         //Izveido jaunu solveri no augstāk rakstītās konfigurācijas
         Solver<BinPackingSolution> solver = solverFactoryFromXML.buildSolver();

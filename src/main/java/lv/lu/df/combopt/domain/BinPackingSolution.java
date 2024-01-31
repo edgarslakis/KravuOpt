@@ -6,6 +6,7 @@ import ai.timefold.solver.core.api.domain.solution.PlanningSolution;
 import ai.timefold.solver.core.api.domain.solution.ProblemFactCollectionProperty;
 import ai.timefold.solver.core.api.domain.valuerange.ValueRangeProvider;
 import ai.timefold.solver.core.api.score.buildin.hardsoft.HardSoftScore;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,10 +38,11 @@ public class BinPackingSolution {
     // Saraksts ar visām mašīnām. Mašīnu nevar mainīt/pārvietot, tāpēc tās ir Problem FACT.
     @ProblemFactCollectionProperty //Fakti - lietas, kas risināšanas gaitā nemainās
     @ValueRangeProvider()   //SARAKSTS ar plānošanas vērtībām. te tās būs sakārtotas.
-    private List<Vehicle> vechicleList = new ArrayList<>();
+    //@JsonIdentityReference(alwaysAsId = true)  //pārvietots no Pack class
+    private List<Vehicle> vehicleList = new ArrayList<>();
 
     public void print() {
-        this.getVechicleList().forEach(vehicle -> {
+        this.getVehicleList().forEach(vehicle -> {
             LOGGER.info(vehicle.getRegNr() + "(" + vehicle.getCapacity() + ")");
             for (Pack pack: this.getPackList()) {
                 if (pack.getVehicle() == vehicle) {
@@ -65,7 +67,7 @@ public class BinPackingSolution {
             v1.setWidth(10 + random.nextInt(20) - 3);
             v1.setCost(100);
 
-            problem.getVechicleList().add(v1);
+            problem.getVehicleList().add(v1);
         }
 
         for (int i = 1; i <= scale; i++) {
@@ -146,7 +148,7 @@ public class BinPackingSolution {
         p9.setX(4);
         p9.setY(1);
 
-        problem.getVechicleList().addAll(List.of(v1, v2, v3));
+        problem.getVehicleList().addAll(List.of(v1, v2, v3));
         problem.getPackList().addAll(List.of(p1,p2,p3,p4,p5,p6,p7,p8,p9));
 
         return problem;

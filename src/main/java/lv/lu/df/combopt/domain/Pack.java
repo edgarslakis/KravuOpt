@@ -30,7 +30,7 @@ public class Pack {
     }
 
     @PlanningVariable
-    @JsonIdentityReference()
+    @JsonIdentityReference() //pārvietoju uz Solution class
     private Vehicle vehicle;
 
     //Jāpārliecinās, lai paciņas x, y izmēri nepārsniedz length, width
@@ -40,7 +40,7 @@ public class Pack {
         else return vehicle.getWidth() < this.getY();
     }
 
-    //J paciņas laukums pārsniedz vehicle Capacity, tā netiek piekārtota mašīnai. t.i. vehicle = null
+    //Ja paciņas laukums pārsniedz vehicle Capacity, tā netiek piekārtota mašīnai. t.i. vehicle = null
     @JsonIgnore
     public Boolean oversized() {
         if (vehicle.getCapacity() < this.getSize()) {

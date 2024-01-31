@@ -18,7 +18,7 @@ public class BenchmarkerRunner {
         //BinPackingSolution problem = BinPackingSolution.generateData(10);
 
         BinPackingSolutionJsonIO binPackingSolutionJsonIO = new BinPackingSolutionJsonIO();
-        binPackingSolutionJsonIO.write(BinPackingSolution.generateData(50), new File("data/scale50.json"));
+        binPackingSolutionJsonIO.write(BinPackingSolution.generateData(10), new File("data/scale10.json"));
 
         /*PlannerBenchmark benchmark = benchmarkFactoryFromXML.buildPlannerBenchmark(
                 BinPackingSolution.generateData(5),
